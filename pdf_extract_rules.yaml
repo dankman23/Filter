@@ -1,0 +1,79 @@
+# pdf_extract_rules.yaml — v4f
+coated_categories:
+  - "Schleifbänder"
+  - "Schmalbänder"
+  - "Langbänder & Kantenschleifbänder"
+  - "Parkettschleifbänder"
+  - "Breitbänder"
+  - "Bänder für Handbandschleifer"
+  - "Feilenbänder"
+  - "Schleifpapier / Schleifrollen / Schleifbögen"
+  - "Schleifscheiben / Schleifblätter"
+  - "Fiberscheiben"
+  - "Gitterscheiben"
+  - "Schleifhülsen / Schleifkappen / Schleifrolls"
+  - "Vliesbänder"
+  - "Vlies-Bögen / Handpads"
+  - "Vliesscheiben"
+  - "Vlies Combidiscs / Vlies Quick Change Discs"
+  - "Schleifschwämme / Schleifklötze"
+
+series_patterns:
+  # Klingspor
+  - "\\b(?:CS|PS|LS)\\s?\\d{2,4}[A-Z]{0,2}\\b"     # CS411Y, PS18E, LS307X …
+  - "\\b(?:SMT|QRC|QMC)\\s?\\d{2,3}\\b"
+  # VSM
+  - "\\b(?:KK|XK|ZK)\\s?\\d{2,4}[A-Z]{0,2}\\b"    # KK711X, XK870X, ZK713X …
+  # Norton / 3M / Hermes / Starcke / LUKAS (grob)
+  - "\\b(?:R|H|RB|JW|JF|JF\\d|J|X|Y)[- ]?\\d{2,4}[A-Z]{0,3}\\b"
+  - "\\b(?:Cubitron\\s?II|Trizact)\\b"
+  - "\\b(?:SC[- ]?(?:BL|BS)|CF|QL|QFN)\\b"
+  # PFERD / Rhodius
+  - "\\b(?:POLIFAN|COMBIDISC|CC-?GRIND|LSZ|LBM)\\b"
+
+attributes_regex:
+  Kornart:
+    - "(?i)(?:Kornart|Schleifkorn|Abrasive(?:\\s+type)?|Grain)\\s*[:\\-]?\\s*([A-Za-z0-9ÄÖÜäöüß/ .,+-]+)"
+  Körnung:
+    - "(?i)(?:Körnung|Korn(?:größe)?|Grit|Grain\\s*size)\\s*[:\\-]?\\s*([Pp]?\\s?\\d{2,4}(?:\\s*[-–]\\s*[Pp]?\\d{2,4})?)"
+    - "(?i)\\b(A\\d{2,3})\\b"      # Trizact A30/A45/A65 …
+    - "(?i)\\b(D\\d{2,3}|CBN\\d{2,3})\\b"  # Diamant/CBN Codes
+  Unterlage:
+    - "(?i)(?:Unterlage|Träger(?:material)?|Backing|Base)\\s*[:\\-]?\\s*([A-Za-z0-9ÄÖÜäöüß/ .,+-]+)"
+  Streuart:
+    - "(?i)(?:Streu(?:art|ung)|Coating)\\s*[:\\-]?\\s*([A-Za-zÄÖÜäöüß/ .,+-]+)"
+  Bindung:
+    - "(?i)(?:Bindung|Bond(?:ing)?)\\s*[:\\-]?\\s*([A-Za-zÄÖÜäöüß/ .,+-]+)"
+
+value_maps:
+  Kornart:
+    - "(?i)aluminiumoxid|korund|al2o3": "Korund / Aluminiumoxid"
+    - "(?i)silic?iumcarbid|sic": "Siliciumcarbid"
+    - "(?i)zirkon": "Zirkonkorund"
+    - "(?i)keram|ceram|cubitron": "Keramikkorn"
+    - "(?i)trizact": "Trizact (mikrorepliziert)"
+    - "(?i)diamant": "Diamant"
+    - "(?i)cbn": "CBN"
+  Unterlage:
+    - "(?i)papier\\s*[A-F]": "Papier (A–F)"
+    - "(?i)gewebe\\s*[XYJ]": "Gewebe (X/Y/J)"
+    - "(?i)faser|fiber|vulkanfiber": "Vulkanfiber"
+    - "(?i)(film|folie)": "Film"
+    - "(?i)(sponge|schwamm|foam)": "Schwamm"
+    - "(?i)vlies": "Vlies"
+  Streuart:
+    - "(?i)closed|dicht": "dicht"
+    - "(?i)semi|halb": "halboffen"
+    - "(?i)open|offen": "offen"
+  Bindung:
+    - "(?i)kunstharz|resin": "Kunstharz auf Kunstharz"
+    - "(?i)leim|glue": "Leimbindung"
+
+title_fallbacks:
+  # Falls PDF nichts liefert, ergänzen wir selektiv aus dem Titel (ohne falsche Treffer):
+  Körnung:
+    - "(?i)(?:\\bKorn\\b|\\bKörnung\\b|\\bGrit\\b)\\s*[:\\-]?\\s*([Pp]?\\d{2,4}(?:\\s*[-–]\\s*[Pp]?\\d{2,4})?)"
+    - "(?i)\\b(A\\d{2,3})\\b"
+  Unterlage:
+    - "(?i)\\b(Papier|Gewebe|Vulkanfiber|Film|Folie|Vlies|Schwamm)\\b"
+  # Kornart/Bindung/Streuart bleiben primär PDF-basiert, um Fehlklassifikationen zu vermeiden.

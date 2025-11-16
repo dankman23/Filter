@@ -1,0 +1,131 @@
+# synonyms_rules.yaml — v4f (Kat1 bleibt UNVERÄNDERT)
+# Zweck: Synonyme/Aliasse → kanonische Werte für Attribute und allgemeine Begriffe.
+# Hinweis: Reine Textnormalisierung (Umlaute, Striche, Maße etc.) passiert in normalize_rules.yaml.
+
+# 1) Globale Text-Synonyme (produkt-/beschreibungsweit), KEINE Kat1-Änderungen
+alias_to_canonical:
+  # Materialien / Werkstoffe (allgemein)
+  "inox": "Edelstahl"
+  "stainless": "Edelstahl"
+  "rostfrei": "Edelstahl"
+  "v2a": "Edelstahl"
+  "v4a": "Edelstahl"
+
+  # Trägersysteme / Befestigung
+  "hook & loop": "Kletthaft"
+  "hook-and-loop": "Kletthaft"
+  "hookit": "Kletthaft"
+  "klett": "Kletthaft"
+
+  # Schnellwechsel
+  "roloc": "Quick Change"
+  "quickchange": "Quick Change"
+  "quick-change": "Quick Change"
+  "qmc": "Quick Change"
+  "qrc": "Quick Change"
+
+  # Streu-Sprachebene (wird unten bei Attribute final auf kanonische Werte gemappt)
+  "open coat": "offen"
+  "semi open": "halb-offen"
+  "semi-open": "halb-offen"
+  "closed coat": "geschlossen"
+
+  # Träger-Basics
+  "paper": "Papier"
+  "cloth": "Gewebe"
+  "non woven": "Vlies"
+  "nonwoven": "Vlies"
+
+  # Bindungen (sprachlich)
+  "resin": "Kunstharz"
+  "bond": "Bindung"
+
+# 2) Attribut-spezifische Aliasse → kanonische Werte
+attribute_alias:
+
+  # Kornart – kanonisch: Korund / Aluminiumoxid | Siliziumkarbid | Zirkonkorund | Keramikkorn | Trizact | Diamant | CBN
+  "Kornart":
+    "alo": "Korund / Aluminiumoxid"
+    "alox": "Korund / Aluminiumoxid"
+    "aluminiumoxid": "Korund / Aluminiumoxid"
+    "aluminium-oxid": "Korund / Aluminiumoxid"
+    "al2o3": "Korund / Aluminiumoxid"
+    "korund": "Korund / Aluminiumoxid"
+
+    "sic": "Siliziumkarbid"
+    "siliciumcarbid": "Siliziumkarbid"
+    "siliziumkarbid": "Siliziumkarbid"
+
+    "zirc": "Zirkonkorund"
+    "zirconia": "Zirkonkorund"
+    "zirkon": "Zirkonkorund"
+
+    "cer": "Keramikkorn"
+    "ceramic": "Keramikkorn"
+    "cubitron": "Keramikkorn"
+
+    "trizact": "Trizact"
+    "diamond": "Diamant"
+    "cbn": "CBN"
+
+  # Unterlage – wir lassen Buchstaben-Codes stehen (fachlich relevant); generische Begriffe werden kanonisiert
+  "Unterlage":
+    "papier": "Papier"
+    "paper": "Papier"
+
+    "gewebe": "Gewebe"
+    "cloth": "Gewebe"
+    "gewebeträger": "Gewebe"
+
+    "vlies": "Vlies"
+    "non woven": "Vlies"
+    "nonwoven": "Vlies"
+
+    "vulkanfiber": "Vulkanfiber"
+    "vulkanfaser": "Vulkanfiber"
+    "fiber": "Vulkanfiber"
+
+    "film": "Film"
+    "folie": "Film"
+
+    "schwamm": "Schwamm"
+    "sponge": "Schwamm"
+    "foam": "Schwamm"
+
+    # Codes durchreichen/vereinheitlichen (bleiben als Codes, Großschreibung angleichen)
+    "jf": "JF"
+    "j": "J"
+    "x": "X"
+    "xf": "XF"
+    "y": "Y"
+    "z": "Z"
+
+  # Streuart – kanonisch: dicht | halboffen | offen
+  "Streuart":
+    "open": "offen"
+    "open coat": "offen"
+    "offen": "offen"
+
+    "semi open": "halboffen"
+    "semi-open": "halboffen"
+    "halb-offen": "halboffen"
+    "halboffen": "halboffen"
+
+    "closed": "dicht"
+    "closed coat": "dicht"
+    "geschlossen": "dicht"
+    "dicht": "dicht"
+
+  # Bindung – kanonisch: z. B. Kunstharz auf Kunstharz, Leim (wenn genannt)
+  "Bindung":
+    "resin over resin": "Kunstharz auf Kunstharz"
+    "resin": "Kunstharz auf Kunstharz"
+    "kunstharz": "Kunstharz auf Kunstharz"
+    "leim": "Leimbindung"
+    "glue": "Leimbindung"
+
+  # Optionale Sondererkennung für Körnungscodes (falls gewünscht als Label neben „Körnung“)
+  "Koernung_Sonder":
+    "a\\d{2,3}": "Trizact"      # A30/A45/A65 …
+    "d\\d{2,3}": "Diamant"      # D64/D91 …
+    "cbn\\d{2,3}": "CBN"        # CBN85 …

@@ -1,0 +1,33 @@
+# Normalisierungs-Regeln (werden VOR dem Synonym-/Alias-Mapping angewendet)
+replace:
+  'ä': 'ae'
+  'ö': 'oe'
+  'ü': 'ue'
+  'ß': 'ss'
+  '–': '-'
+  '—': '-'
+
+strip_chars:
+  - '/'
+  - '\\'
+  - '|'
+  - ';'
+
+regex_replace:
+  # 'mm' mit Zwischenraum (z.B. "125mm" -> "125 mm")
+  - pattern: '\b(\d+)\s*mm\b'
+    repl: '\1 mm'
+
+  # microns -> µm
+  - pattern: '\b(\d+(?:[.,]\d+)?)\s*micron(s)?\b'
+    repl: '\1 µm'
+
+  # P-Körnung vereinheitlichen
+  - pattern: '\b(?:p)\s*(\d{2,4})\b'
+    repl: 'P\1'
+  - pattern: '\bgrit\s*(\d{2,4})\b'
+    repl: 'P\1'
+
+  # Maße-Zusammenzug: "125 x 22,23" -> "125x22,23" (dritter Teil optional)
+  - pattern: '\b(\d+(?:[.,]\d+)?)\s*[x×]\s*(\d+(?:[.,]\d+)?)(?:\s*[x×]\s*(\d+(?:[.,]\d+)?))?\b'
+    repl: '\1x\2x\3'
